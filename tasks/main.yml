@@ -1,0 +1,42 @@
+---
+- name: Add Docker repository
+  copy:
+    src=yum-docker.repo
+    dest=/etc/yum.repos.d/docker.repo
+
+- name: Install Docker
+  yum:
+    name=docker-engine
+    state=latest
+
+- name: Enable Docker service
+  service:
+    name: docker
+    enabled: yes
+
+- name: Create docker group
+  group:
+    name: docker
+    state: present
+    system: yes
+
+- name: Add users to docker group
+  user:
+    append: yes
+    groups: docker
+    state: present
+    name: '{{ item }}'
+  with_items: docker_users
+
+- name: Install Python Docker client
+  pip:
+    name=docker-py
+    state=present
+    executable=pip2
+    version={{docker_dockerpy_version|default(omit)}}
+
+- name: Start Docker
+  service:
+    name: docker
+    state: restarted
+
