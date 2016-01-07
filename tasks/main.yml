@@ -35,6 +35,12 @@
     executable=pip2
     version={{docker_dockerpy_version|default(omit)}}
 
+- name: Install Docker Compose
+  pip:
+    name=docker-compose
+    state=present
+    executable=pip2
+
 - name: Start Docker
   service:
     name: docker
