@@ -1,7 +1,7 @@
 Ansible Role: Docker
 ====
 
-Ansible role that installs Docker and docker-py on CentOS 6/7.
+Ansible role that installs Docker, docker-py and docker-compose on CentOS 6/7.
 
 Role Variables
 ----
